@@ -1,1 +1,4 @@
-# Open_Logic_Lean
+# Open Logic Textbook Formalization in Lean
+The [Open Logic Project](https://openlogicproject.org/) is an open source project which has created an open access [textbook](https://builds.openlogicproject.org/open-logic-complete.pdf) on logic which has been released under the [CC-BY-4.0-License](https://creativecommons.org/licenses/by/4.0/). See the github [repository](https://github.com/OpenLogicProject/OpenLogic) for more info.
+
+The goal of this formalization project is to formalize as many of the definitions and proofs from this book using the Lean theorem prover. We will be starting from scratch as much as possible and making minimal use of results already proved in the mathlib library. The goal is to follow the outline of the text as closely as possible. This project is released under the same license [CC-BY-4.0-License](https://creativecommons.org/licenses/by/4.0/). 
