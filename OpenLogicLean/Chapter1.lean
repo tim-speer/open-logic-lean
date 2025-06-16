@@ -1,8 +1,9 @@
 import Mathlib.Data.Set.Basic
 
------------------
--- Section 1.1 --
------------------
+
+/-*********
+Section 1.1
+*********-/
 section Section_1_1
 
 -- Definition 1.1 --
@@ -12,9 +13,9 @@ def set_equality {α : Type} (A B : Set α) : Prop :=
 end Section_1_1
 
 
------------------
--- Section 1.2 --
------------------
+/-*********
+Section 1.2
+*********-/
 section Section_1_2
 
 -- Definition 1.5 --
@@ -50,6 +51,26 @@ theorem Proposition_1_8 {α : Type} (A B : Set α) :
 
 -- Definition 1.10 --
 def power_set {α : Type} (A : Set α) : Set (Set α) :=
-  {(B : Set α) | subset B A}
+  {B : Set α | subset B A}
 
 end Section_1_2
+
+
+/-*********
+Section 1.4
+*********-/
+section Section_1_4
+
+-- Definition 1.15 --
+def set_union {α : Type} (A B : Set α) : Set α :=
+  {x : α | x ∈ A ∨ x ∈ B}
+
+-- Definition 1.17 --
+def set_intersection {α : Type} (A B : Set α) : Set α :=
+  {x : α | x ∈ A ∧ x ∈ B}
+
+-- Definition 1.22 --
+def set_difference {α : Type} (A B : Set α) : Set α :=
+  {x : α | x ∈ A ∧ x ∉ B}
+
+end Section_1_4
