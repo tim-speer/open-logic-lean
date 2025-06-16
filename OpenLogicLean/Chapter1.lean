@@ -32,7 +32,7 @@ theorem subset_self {α : Type} (A : Set α) : subset A A := by
 
 -- Proposition 1.8 --
 theorem Proposition_1_8 {α : Type} (A B : Set α) :
-set_equality A B ↔ subset A B ∧ subset B A := by
+  set_equality A B ↔ subset A B ∧ subset B A := by
   rw [set_equality, subset, subset]
   constructor
   . intro A_equals_B
@@ -47,5 +47,9 @@ set_equality A B ↔ subset A B ∧ subset B A := by
       exact A_subset_B x x_in_A
     . intro x_in_B
       exact B_subset_A x x_in_B
+
+-- Definition 1.10 --
+def power_set {α : Type} (A : Set α) : Set (Set α) :=
+  {(B : Set α) | subset B A}
 
 end Section_1_2
