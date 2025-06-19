@@ -85,4 +85,10 @@ section Section_1_5
 def ordered_pair {α : Type} (a b : α) : Set (Set α) :=
   {{a}, {a, b}}
 
+-- Definitino 1.24 --
+def cartesian_product {α : Type} (A B : Set α) : Set (Set (Set α)) :=
+  {x : Set (Set α) | ∃ a ∈ A, ∃ b ∈ B, x = ordered_pair a b}
+
+
+
 end Section_1_5
