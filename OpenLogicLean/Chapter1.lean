@@ -74,3 +74,15 @@ def set_difference {α : Type} (A B : Set α) : Set α :=
   {x : α | x ∈ A ∧ x ∉ B}
 
 end Section_1_4
+
+
+/-*********
+Section 1.5
+*********-/
+section Section_1_5
+
+-- Definition 1.23 --
+def ordered_pair {α : Type} (a b : α) : Set (Set α) :=
+  {{a}, {a, b}}
+
+end Section_1_5
