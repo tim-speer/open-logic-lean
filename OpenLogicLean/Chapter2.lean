@@ -71,8 +71,11 @@ Section 2.4
 section Section_2_4
 
 -- Definition 2.10 --
-def equivalence_relation {α : Type}
-  (R : Set (Set (Set α))) (A : Set α) : Prop :=
+def equivalence_relation {α : Type} (R : Set (Set (Set α))) (A : Set α) : Prop :=
   reflexive R A ∧ symmetric R A ∧ transitive R A
+
+def equivalence_class {α : Type} (R : Set (Set (Set α))) (A : Set α) (x : α)
+  (x_in_A : x ∈ A) (eq_rel : equivalence_relation R A) : Set α :=
+  {y : α | y ∈ A ∧ (ordered_pair x y ∈ R)}
 
 end Section_2_4
