@@ -69,8 +69,12 @@ Section 2.4
 section Section_2_4
 
 -- Definition 2.10 --
-def equivalence_relation {α : Type} (R : Set (Set (Set α))) (A : Set α) : Prop :=
-  reflexive R A ∧ symmetric R A ∧ transitive R A
+def is_equivalence_relation (bin_rel : binary_relation) : Prop :=
+  reflexive bin_rel ∧ symmetric bin_rel ∧ transitive bin_rel
+
+structure equivalence_relation where
+  bin_rel : binary_relation
+  er : is_equivalence_relation bin_rel
 
 def equivalence_class {α : Type} (R : Set (Set (Set α))) (A : Set α) (x : α)
   (x_in_A : x ∈ A) (eq_rel : equivalence_relation R A) : Set α :=
