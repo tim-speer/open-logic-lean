@@ -79,7 +79,49 @@ structure equivalence_relation where
 -- Definition 2.11 --
 def equivalence_class (eq_rel : equivalence_relation) (x : eq_rel.bin_rel.α)
   (x_in_A : x ∈ eq_rel.bin_rel.A) : Set eq_rel.bin_rel.α :=
-  {y : eq_rel.bin_rel.α | ordered_pair x y ∈ eq_rel.bin_rel.R}
+  {y : eq_rel.bin_rel.α | y ∈ eq_rel.bin_rel.A ∧
+                          ordered_pair x y ∈ eq_rel.bin_rel.R}
 
+-- Proposition 2.12 --
+theorem Proposition_2_12 (eq_rel : equivalence_relation)
+  (x y : eq_rel.bin_rel.α) (x_in_A : x ∈ eq_rel.bin_rel.A)
+  (y_in_A : y ∈ eq_rel.bin_rel.A) : ordered_pair x y ∈ eq_rel.bin_rel.R ↔
+  set_equality (equivalence_class eq_rel x x_in_A)
+  (equivalence_class eq_rel y y_in_A) := by
+  constructor
+  . intro xy_in_R z
+    have yx_in_R : ordered_pair y x ∈ eq_rel.bin_rel.R := by
+      apply eq_rel.er.right.left
+      exact ⟨x_in_A, y_in_A⟩
+      assumption
+    constructor
+    . intro z_in_eq_cls_x
+      have z_in_A : z ∈ eq_rel.bin_rel.A := by
+        exact z_in_eq_cls_x.left
+      have xz_in_R : ordered_pair x z ∈ eq_rel.bin_rel.R := by
+        exact z_in_eq_cls_x.right
+      have yz_in_R : ordered_pair y z ∈ eq_rel.bin_rel.R := by
+        apply eq_rel.er.right.right y x z
+        exact ⟨y_in_A, x_in_A, z_in_A⟩
+        exact ⟨yx_in_R, xz_in_R⟩
+      exact ⟨z_in_A, yz_in_R⟩
+    . intro z_in_eq_cls_y
+      have z_in_A : z ∈ eq_rel.bin_rel.A := by
+        exact z_in_eq_cls_y.left
+      have yz_in_R : ordered_pair y z ∈ eq_rel.bin_rel.R := by
+        exact z_in_eq_cls_y.right
+      have xz_in_R : ordered_pair x z ∈ eq_rel.bin_rel.R := by
+        apply eq_rel.er.right.right x y z
+        exact ⟨x_in_A, y_in_A, z_in_A⟩
+        exact ⟨xy_in_R, yz_in_R⟩
+      exact ⟨z_in_A, xz_in_R⟩
+  . intro x_cls_eq_y_cls
+    have y_in_cls_y : y ∈ equivalence_class eq_rel y y_in_A := by
+      constructor
+      assumption
+      exact eq_rel.er.left y y_in_A
+    have y_in_cls_x : y ∈ equivalence_class eq_rel x x_in_A := by
+      exact (x_cls_eq_y_cls y).mpr y_in_cls_y
+    exact y_in_cls_x.right
 
 end Section_2_4
