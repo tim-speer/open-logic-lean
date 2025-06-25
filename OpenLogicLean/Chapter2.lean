@@ -76,8 +76,10 @@ structure equivalence_relation where
   bin_rel : binary_relation
   er : is_equivalence_relation bin_rel
 
-def equivalence_class {α : Type} (R : Set (Set (Set α))) (A : Set α) (x : α)
-  (x_in_A : x ∈ A) (eq_rel : equivalence_relation R A) : Set α :=
-  {y : α | y ∈ A ∧ (ordered_pair x y ∈ R)}
+-- Definition 2.11 --
+def equivalence_class (eq_rel : equivalence_relation) (x : eq_rel.bin_rel.α)
+  (x_in_A : x ∈ eq_rel.bin_rel.A) : Set eq_rel.bin_rel.α :=
+  {y : eq_rel.bin_rel.α | ordered_pair x y ∈ eq_rel.bin_rel.R}
+
 
 end Section_2_4
