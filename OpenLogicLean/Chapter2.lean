@@ -125,3 +125,19 @@ theorem Proposition_2_12 (eq_rel : equivalence_relation)
     exact y_in_cls_x.right
 
 end Section_2_4
+
+
+/-*********
+Section 2.5
+*********-/
+section Section_2_5
+
+-- Definition 2.14 --
+def is_preorder (bin_rel : binary_relation) : Prop :=
+  reflexive bin_rel ∧ transitive bin_rel
+
+structure preorder where
+  bin_rel : binary_relation
+  po : is_preorder bin_rel
+
+end Section_2_5
