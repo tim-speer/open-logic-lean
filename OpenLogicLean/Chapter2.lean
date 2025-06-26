@@ -140,4 +140,20 @@ structure preorder where
   bin_rel : binary_relation
   po : is_preorder bin_rel
 
+-- Definition 2.15 --
+def is_partial_order (bin_rel : binary_relation) : Prop :=
+  is_preorder bin_rel ∧ anti_symmetric bin_rel
+
+structure partial_order where
+  bin_rel : binary_relation
+  po : is_partial_order bin_rel
+
+-- Definition 2.16 --
+def is_linear_order (bin_rel : binary_relation) : Prop :=
+  is_partial_order bin_rel ∧ connected bin_rel
+
+structure linear_order where
+  bin_rel : binary_relation
+  lo : is_linear_order bin_rel
+
 end Section_2_5
