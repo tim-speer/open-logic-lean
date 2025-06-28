@@ -156,4 +156,20 @@ structure linear_order where
   bin_rel : binary_relation
   lo : is_linear_order bin_rel
 
+-- Definition 2.21 --
+def is_strict_order (bin_rel : binary_relation) : Prop :=
+  irreflexive bin_rel ∧ asymmetric bin_rel ∧ transitive bin_rel
+
+structure strict_order where
+  bin_rel : binary_relation
+  so : is_strict_order bin_rel
+
+-- Definition 2.22 --
+def is_strict_linear_order (bin_rel : binary_relation) : Prop :=
+  is_strict_order bin_rel ∧ connected bin_rel
+
+structure strict_linear_order where
+  bin_rel : binary_relation
+  sl : is_strict_linear_order bin_rel
+
 end Section_2_5
