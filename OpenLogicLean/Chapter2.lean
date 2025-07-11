@@ -175,4 +175,8 @@ structure strict_linear_order where
 def diagonal {α : Type} (A : Set α) : Set (Set (Set α)) :=
   {p : Set (Set α) | ∃ a ∈ A, p = ordered_pair a a}
 
+lemma bin_rel_union_diagonal (bin_rel : binary_relation) :
+  is_binary_relation (bin_rel.R ∪ diagonal bin_rel.A) bin_rel.A := by
+  sorry
+
 end Section_2_5
