@@ -177,6 +177,16 @@ def diagonal {α : Type} (A : Set α) : Set (Set (Set α)) :=
 
 lemma bin_rel_union_diagonal (bin_rel : binary_relation) :
   is_binary_relation (bin_rel.R ∪ diagonal bin_rel.A) bin_rel.A := by
-  sorry
+  rw [is_binary_relation, subset]
+  intro x x_in_union
+  rcases x_in_union with x_in_R | x_in_diagonal
+  apply bin_rel.br
+  assumption
+  rw [cartesian_product]
+  simp
+  rw [diagonal] at x_in_diagonal
+  simp at x_in_diagonal
+  rcases x_in_diagonal with ⟨c, h⟩
+  use c, h.1, c, h.1, h.2
 
 end Section_2_5
