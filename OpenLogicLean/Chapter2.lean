@@ -189,4 +189,15 @@ lemma bin_rel_union_diagonal (bin_rel : binary_relation) :
   rcases x_in_diagonal with ⟨c, h⟩
   use c, h.1, c, h.1, h.2
 
+def reflexive_closure (bin_rel : binary_relation) : binary_relation :=
+  { α := bin_rel.α,
+    A := bin_rel.A,
+    R := bin_rel.R ∪ diagonal bin_rel.A,
+    br := bin_rel_union_diagonal bin_rel}
+
+-- Proposition 2.24 --
+theorem Proposition_2_24 (s_order : strict_order) :
+  is_partial_order (reflexive_closure s_order.bin_rel) := by
+  sorry
+
 end Section_2_5
