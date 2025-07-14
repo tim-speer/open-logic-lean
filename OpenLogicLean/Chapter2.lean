@@ -176,7 +176,7 @@ def diagonal {α : Type} (A : Set α) : Set (Set (Set α)) :=
   {p : Set (Set α) | ∃ a ∈ A, p = ordered_pair a a}
 
 lemma bin_rel_union_diagonal (bin_rel : binary_relation) :
-  is_binary_relation (bin_rel.R ∪ diagonal bin_rel.A) bin_rel.A := by
+  is_binary_relation (set_union bin_rel.R  (diagonal bin_rel.A)) bin_rel.A := by
   rw [is_binary_relation, subset]
   intro x x_in_union
   rcases x_in_union with x_in_R | x_in_diagonal
@@ -192,12 +192,47 @@ lemma bin_rel_union_diagonal (bin_rel : binary_relation) :
 def reflexive_closure (bin_rel : binary_relation) : binary_relation :=
   { α := bin_rel.α,
     A := bin_rel.A,
-    R := bin_rel.R ∪ diagonal bin_rel.A,
+    R := set_union bin_rel.R (diagonal bin_rel.A),
     br := bin_rel_union_diagonal bin_rel}
+
+lemma ordered_pair_union {α : Type} (a b : α) :
+  set_equality (ordered_pair a b) (set_union {{a}} {{a, b}}) := by
+  sorry
+
+lemma ordered_pairs_eq {α : Type} (a b c d : α) :
+  set_equality (ordered_pair a b) (ordered_pair c d) → a = c ∧ b = d := by
+  rw [Proposition_1_8]
+  intro ⟨ab_sub_cd, cd_sub_ab⟩
+  constructor
+  . have sing_a_in_cd : {a} ∈ ordered_pair c d := by
+      apply ab_sub_cd
+      sorry
 
 -- Proposition 2.24 --
 theorem Proposition_2_24 (s_order : strict_order) :
   is_partial_order (reflexive_closure s_order.bin_rel) := by
-  sorry
+  rw [is_partial_order]
+  constructor
+  . rw [is_preorder]
+    constructor
+    . rw [reflexive]
+      intro x x_in_A
+      right
+      use x, x_in_A
+    . intro x y z ⟨x_in_A, y_in_A, z_in_A⟩ ⟨pair_xy_in_R, pair_yz_in_R⟩
+      rcases pair_xy_in_R with xy_in_left | xy_in_right
+      . rcases pair_yz_in_R with yz_in_left | yz_in_right
+        . left
+          apply s_order.so.2.2 x y z ⟨x_in_A, y_in_A, z_in_A⟩
+          exact ⟨xy_in_left, yz_in_left⟩
+        . left
+          have y_eq_z : y = z := by
+            rw [diagonal] at yz_in_right
+            simp at yz_in_right
+            rcases yz_in_right with ⟨a, h⟩
+            apply ordered_pairs_eq y z a a h.right
+
+          rw [← y_eq_z]
+          assumption
 
 end Section_2_5
