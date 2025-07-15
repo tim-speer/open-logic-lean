@@ -207,10 +207,6 @@ lemma ordered_pair_union {α : Type} (a b : α) :
   . intro x_in_union
     exact x_in_union
 
-lemma elem_in_sing_eq {α : Type} (x y : α) : x ∈ ({y} : Set α) → x = y := by
-  intro h
-  exact h
-
 lemma ordered_pairs_eq {α : Type} (a b c d : α) :
   set_equality (ordered_pair a b) (ordered_pair c d) → a = c ∧ b = d := by
   rw [Proposition_1_8]
@@ -227,12 +223,21 @@ lemma ordered_pairs_eq {α : Type} (a b c d : α) :
     simp
     right
     rfl
-  have sing_a_or : set_equality {a} {c} ∨ set_equality {a} {c, d} := by
-    rw [ordered_pair_union, set_union] at sing_a_in_cd
-    simp at sing_a_in_cd
-    rcases sing_a_in_cd with sing_a_in_c | sing_a_in_cd
-    . left
+  rw [ordered_pair_union, set_union] at sing_a_in_cd
+  simp at sing_a_in_cd
+  rcases sing_a_in_cd with sing_a_in_c | sing_a_in_c_d
+  . have sing_a_eq_sing_c : {a} = ({c} : Set α) := by
+      exact sing_a_in_c
+    have a_in_c : a ∈ ({c} : Set α) := by
+      rw [Set.ext_iff] at sing_a_eq_sing_c
+      apply (sing_a_eq_sing_c a).mp
+      exact rfl
+    have a_eq_c : a = c := a_in_c
+    rw [a_eq_c]
+    simp
+    have ab_eq_cd : {a, b} = ({a, d} : Set α) := by
       sorry
+
 
 theorem Proposition_2_25 (s_order : strict_order) :
   is_partial_order (reflexive_closure s_order.bin_rel) := by
