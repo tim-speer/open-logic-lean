@@ -195,6 +195,7 @@ def reflexive_closure (bin_rel : binary_relation) : binary_relation :=
     R := set_union bin_rel.R (diagonal bin_rel.A),
     br := bin_rel_union_diagonal bin_rel}
 
+-- Proposition 2.25 --
 lemma ordered_pair_union {α : Type} (a b : α) :
   set_equality (ordered_pair a b) (set_union {{a}} {{a, b}}) := by
   rw [set_equality, set_union, ordered_pair]
@@ -206,18 +207,34 @@ lemma ordered_pair_union {α : Type} (a b : α) :
   . intro x_in_union
     exact x_in_union
 
+lemma elem_in_sing_eq {α : Type} (x y : α) : x ∈ ({y} : Set α) → x = y := by
+  intro h
+  exact h
 
 lemma ordered_pairs_eq {α : Type} (a b c d : α) :
   set_equality (ordered_pair a b) (ordered_pair c d) → a = c ∧ b = d := by
   rw [Proposition_1_8]
   intro ⟨ab_sub_cd, cd_sub_ab⟩
-  constructor
-  . have sing_a_in_cd : {a} ∈ ordered_pair c d := by
-      apply ab_sub_cd
+  have sing_a_in_cd : {a} ∈ ordered_pair c d := by
+    apply ab_sub_cd
+    rw [ordered_pair_union, set_union]
+    simp
+    left
+    rfl
+  have ab_in_cd : {a, b} ∈ ordered_pair c d := by
+    apply ab_sub_cd
+    rw [ordered_pair_union, set_union]
+    simp
+    right
+    rfl
+  have sing_a_or : set_equality {a} {c} ∨ set_equality {a} {c, d} := by
+    rw [ordered_pair_union, set_union] at sing_a_in_cd
+    simp at sing_a_in_cd
+    rcases sing_a_in_cd with sing_a_in_c | sing_a_in_cd
+    . left
       sorry
 
--- Proposition 2.24 --
-theorem Proposition_2_24 (s_order : strict_order) :
+theorem Proposition_2_25 (s_order : strict_order) :
   is_partial_order (reflexive_closure s_order.bin_rel) := by
   rw [is_partial_order]
   constructor
