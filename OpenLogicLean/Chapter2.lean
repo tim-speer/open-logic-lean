@@ -197,7 +197,15 @@ def reflexive_closure (bin_rel : binary_relation) : binary_relation :=
 
 lemma ordered_pair_union {α : Type} (a b : α) :
   set_equality (ordered_pair a b) (set_union {{a}} {{a, b}}) := by
-  sorry
+  rw [set_equality, set_union, ordered_pair]
+  intro x
+  simp
+  constructor
+  . intro x_in_ab
+    exact x_in_ab
+  . intro x_in_union
+    exact x_in_union
+
 
 lemma ordered_pairs_eq {α : Type} (a b c d : α) :
   set_equality (ordered_pair a b) (ordered_pair c d) → a = c ∧ b = d := by
